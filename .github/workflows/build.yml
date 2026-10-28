@@ -9,21 +9,20 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-      - name: Descarregar Código
-        uses: actions/checkout@v4
+      - name: Clonar Repositório
+        run: |
+          git clone https://github.com/almeidaerica691-criador/up-creditos.git .
 
-      - name: Configurar Java
-        uses: actions/setup-java@v5
-        with:
-          distribution: 'zulu'
-          java-version: '17'
+      - name: Instalar Java 17
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openjdk-17-jdk
+          echo "JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64" >> $GITHUB_ENV
 
-      - name: Configurar Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.22.x'
-          channel: 'stable'
-          cache: true
+      - name: Instalar Flutter Manualmente
+        run: |
+          git clone https://github.com/flutter/flutter.git -b stable --depth 1 _flutter
+          echo "$GITHUB_WORKSPACE/_flutter/bin" >> $GITHUB_PATH
 
       - name: Obter dependências
         run: flutter pub get
