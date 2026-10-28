@@ -3,12 +3,14 @@ name: Gerar APK Android
 on:
   push:
     branches: [ main, master, principal ]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - name: Descarregar Código
+        uses: actions/checkout@v4
 
       - name: Configurar Java
         uses: actions/setup-java@v5
