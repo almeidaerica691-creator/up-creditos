@@ -5,27 +5,27 @@ on:
     branches: [ main, master, principal ]
   workflow_dispatch:
 
+env:
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
-      - name: Descarregar Código via Git Direto
-        run: |
-          git init
-          git remote add origin https://github.com/almeidaerica691-criador/up-creditos.git
-          git fetch origin principal
-          git checkout origin/principal
+      - name: Descarregar Código
+        uses: actions/checkout@v4
 
       - name: Configurar Java
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Instalar Flutter Manualmente
-        run: |
-          git clone https://github.com/flutter/flutter.git -b stable --depth 1 _flutter
-          echo "$GITHUB_WORKSPACE/_flutter/bin" >> $GITHUB_PATH
+      - name: Configurar Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.22.x'
+          channel: 'stable'
 
       - name: Obter dependências
         run: flutter pub get
