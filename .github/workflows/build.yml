@@ -9,8 +9,12 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-      - name: Descarregar Código
-        uses: actions/checkout@v4
+      - name: Descarregar Código via Git Direto
+        run: |
+          git init
+          git remote add origin https://github.com/almeidaerica691-criador/up-creditos.git
+          git fetch origin principal
+          git checkout origin/principal
 
       - name: Configurar Java
         uses: actions/setup-java@v5
